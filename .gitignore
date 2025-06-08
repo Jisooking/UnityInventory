@@ -12,6 +12,35 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+Library/
+Temp/
+Obj/
+Build/
+Logs/
+*.[sS]wf
+*.[jJ]son.meta
+
+# Package Cache (if not needed in Git)
+# Check your specific Unity setup, but often these can be ignored
+UnityInventory/Library/PackageCache/
+
+# IDE generated files
+.idea/
+.vscode/
+*.suo
+*.user
+*.csproj
+*.sln
+
+# Other common large files to ignore
+*.bak
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.DS_Store # macOS specific
+Thumbs.db # Windows specific
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
