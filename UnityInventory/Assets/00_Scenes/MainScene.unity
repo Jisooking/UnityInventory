@@ -811,6 +811,8 @@ MonoBehaviour:
   UIMainMenuCanvas: {fileID: 1435090767}
   UIStatusCanvas: {fileID: 353920945}
   UIInventoryCanvas: {fileID: 1045148967}
+  statusButton: {fileID: 871584840}
+  inventoryButton: {fileID: 225739163}
 --- !u!4 &716701794
 Transform:
   m_ObjectHideFlags: 0

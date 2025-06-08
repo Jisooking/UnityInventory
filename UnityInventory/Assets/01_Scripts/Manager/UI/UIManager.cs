@@ -5,12 +5,11 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager Instance { get; set; } // 싱글톤
 
-    [SerializeField]
-    private Canvas UIMainMenuCanvas; 
-    [SerializeField]
-    private Canvas UIStatusCanvas;   
-    [SerializeField]
-    private Canvas UIInventoryCanvas;
+    [SerializeField] private Canvas UIMainMenuCanvas;
+    [SerializeField] private Canvas UIStatusCanvas;
+    [SerializeField] private Canvas UIInventoryCanvas;
+    [SerializeField] private Button statusButton;
+    [SerializeField] private Button inventoryButton;
 
     public Canvas CurrentActiveCanvas { get; private set; }
 
@@ -19,7 +18,7 @@ public class UIManager : MonoBehaviour
         if (!Instance)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -29,13 +28,25 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        Button statusButton = UIMainMenuCanvas.transform.GetChild(0).GetComponent<Button>();
-        Button inventoryButton = UIStatusCanvas.transform.GetChild(1).GetComponent<Button>();
-        statusButton.onClick.AddListener(OpenStatusUI);
-        inventoryButton.onClick.AddListener(OpenInventoryUI);
+        if (statusButton)
+        {
+            statusButton.onClick.AddListener(OpenStatusUI);
+        }
+        else
+        {
+            Debug.Log("연결된 버튼이 없습니다.");
+        }
+        if (inventoryButton)
+        {
+            inventoryButton.onClick.AddListener(OpenInventoryUI);
+        }
+        else
+        {
+            Debug.Log("연결된 버튼이 없습니다.");
+        }
         OpenMainMenuUI();
     }
-    
+
     private void CloseAllCanvases()
     {
         UIMainMenuCanvas.gameObject.SetActive(false);
@@ -49,21 +60,21 @@ public class UIManager : MonoBehaviour
         UIMainMenuCanvas.gameObject.SetActive(true);
         CurrentActiveCanvas = UIMainMenuCanvas;
     }
-    
+
     public void OpenStatusUI()
     {
         CloseAllCanvases();
         UIStatusCanvas.gameObject.SetActive(true);
         CurrentActiveCanvas = UIStatusCanvas;
     }
-    
+
     public void OpenInventoryUI()
     {
         CloseAllCanvases();
         UIInventoryCanvas.gameObject.SetActive(true);
         CurrentActiveCanvas = UIInventoryCanvas;
     }
-    
+
     public void GoBackToMainMenu()
     {
         OpenMainMenuUI();
