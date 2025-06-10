@@ -225,8 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 249b2a8bb96f6f1429d8970f4ee4b6cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 710550556284887832}
   statusNameText: {fileID: 1090931582282765611}
+  statusIconImage: {fileID: 710550556284887832}
   statusValueText: {fileID: 305768437856685339}
 --- !u!1 &2775329774043844394
 GameObject:
