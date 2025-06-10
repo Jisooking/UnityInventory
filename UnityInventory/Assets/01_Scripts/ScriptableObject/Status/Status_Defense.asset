@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Status_Defense
   m_EditorClassIdentifier: 
   statusName: Defense
-  statusIcon: {fileID: 0}
+  statusIcon: {fileID: -857972762, guid: 046f1d28c3a72e746a30fce4bf0e9b56, type: 3}
   statusValue: 20

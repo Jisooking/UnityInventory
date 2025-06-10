@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Status_Attack
   m_EditorClassIdentifier: 
   statusName: Attack
-  statusIcon: {fileID: 0}
+  statusIcon: {fileID: -2114101295, guid: 046f1d28c3a72e746a30fce4bf0e9b56, type: 3}
   statusValue: 30
