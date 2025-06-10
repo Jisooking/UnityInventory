@@ -2005,7 +2005,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1976937820}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2251,8 +2251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1fd9b71f112b04984171480fe31511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManagerData: {fileID: 11400000, guid: 7de5d175cba2ff040aeffa587ff431ed, type: 2}
   slotPrefab: {fileID: 7534551094814292540, guid: 52665e72f0dc7bc4d98e6f691e708b9e, type: 3}
   content: {fileID: 1002059389}
+  playerInventory: []
   slotCount: 30
 --- !u!1 &1078088665
 GameObject:
@@ -2921,8 +2923,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1fd9b71f112b04984171480fe31511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManagerData: {fileID: 0}
   slotPrefab: {fileID: 1684935655068299759, guid: f3ba74eac8a7e4843a7f71ff2e88fb46, type: 3}
   content: {fileID: 1867465162}
+  playerInventory: []
   slotCount: 30
 --- !u!114 &1273635521
 MonoBehaviour:
