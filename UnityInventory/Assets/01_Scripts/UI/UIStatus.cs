@@ -13,15 +13,15 @@ public class UIStatus : MonoBehaviour
     // UI를 초기화하고 플레이어 스탯을 표시하는 메서드
     public void InitializeUI()
     {
-        var character = GameManager.Instance.Player;
-        // 이전에 생성된 슬롯이 있다면 모두 제거합니다.
-
-        if (character == null)
+        ClearStatusSlots();
+        
+        if (!PlayerManager.Instance || PlayerManager.Instance.playerCharacter == null)
         {
             return;
         }
         
-        // 2. 플레이어의 각 StatusData를 사용하여 슬롯 생성 및 할당
+        var character = PlayerManager.Instance.playerCharacter;
+        
         AddStatusSlot(character.Attack);
         AddStatusSlot(character.Defense);
         AddStatusSlot(character.Hp);
@@ -39,7 +39,7 @@ public class UIStatus : MonoBehaviour
         {
             return; 
         }
-
+        
         GameObject newSlotGO = Instantiate(statusSlotPrefab, slotParent);
         StatusSlot slotUI = newSlotGO.GetComponent<StatusSlot>();
 
@@ -52,5 +52,21 @@ public class UIStatus : MonoBehaviour
         {
             Destroy(newSlotGO); // 컴포넌트가 없으면 생성된 GameObject 삭제
         }
+    }
+    public void UpdateStatusUI()
+    {
+        InitializeUI();
+    }
+    
+    private void ClearStatusSlots()
+    {
+        foreach (GameObject slotGO in statusSlots)
+        {
+            if (slotGO)
+            {
+                Destroy(slotGO);
+            }
+        }
+        statusSlots.Clear();
     }
 }

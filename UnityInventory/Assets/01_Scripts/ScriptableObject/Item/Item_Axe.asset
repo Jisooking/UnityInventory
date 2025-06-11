@@ -15,3 +15,8 @@ MonoBehaviour:
   itemName: Axe
   itemIcon: {fileID: -91796869, guid: cfa63c4c96530544ab554576da737592, type: 3}
   itemValue: 20
+  itemType: 0
+  attackBonus: 10
+  defenseBonus: 0
+  healthBonus: 0
+  critBonus: 0

@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        InitializeUI(); // 
+        InitializeUI();
         OpenMainMenuUI(); // 게임 시작 시 메인 메뉴 열기
     }
 
@@ -169,4 +169,5 @@ public class UIManager : MonoBehaviour
         if (globalBackButton)
             globalBackButton.onClick.RemoveListener(OnGlobalBackButtonClicked);
     }
+
 }

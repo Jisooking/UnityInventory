@@ -16,3 +16,7 @@ MonoBehaviour:
   itemIcon: {fileID: -129065216, guid: cfa63c4c96530544ab554576da737592, type: 3}
   itemValue: 20
   itemType: 1
+  attackBonus: 0
+  defenseBonus: 10
+  healthBonus: 0
+  critBonus: 0

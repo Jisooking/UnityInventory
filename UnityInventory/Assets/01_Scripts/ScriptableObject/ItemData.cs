@@ -7,6 +7,12 @@ public class ItemData : ScriptableObject
     public Sprite itemIcon; 
     public int itemValue;   
     public ItemType itemType;
+    
+    [Header("Item Effects")]
+    public int attackBonus;
+    public int defenseBonus;
+    public int healthBonus;
+    public int critBonus;
 }
 
 public enum ItemType

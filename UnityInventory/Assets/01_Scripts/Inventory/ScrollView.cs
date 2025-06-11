@@ -18,8 +18,6 @@ public class ScrollView : MonoBehaviour
     
     public List<InventorySlot> playerInventory = new List<InventorySlot>();
     
-    public int slotCount = 30;
-
     private void Start()
     {
         InitializePlayerInventory();
@@ -29,30 +27,38 @@ public class ScrollView : MonoBehaviour
     private void InitializePlayerInventory()    // 아이템 인벤토리 초기화 함수
     {
         if (!inventoryManagerData || inventoryManagerData.allItems.Count <= 0) return;
+        
+        playerInventory.Clear();
+
         foreach (var item in inventoryManagerData.allItems)
         {
-            AddItemToPlayerInventory(item, 1); // 모든 아이템을 1개씩 추가
+            AddItemToPlayerInventory(item, 1, false); 
         }
     }
 
-    private void AddItemToPlayerInventory(ItemData itemToAdd, int quantity) // 아이템 
+    private void AddItemToPlayerInventory(ItemData itemToAdd, int quantity,bool updateUI = true) // 아이템 
     {
-        if (!itemToAdd) return;
+        if (!itemToAdd || quantity <= 0) return;
 
         // 이미 인벤토리에 같은 아이템이 있는지 확인하여 수량만 업데이트
         foreach (var slot in playerInventory)
         {
             if (slot.itemData != itemToAdd) continue;
             slot.quantity += quantity;
-            UpdateInventoryDisplay(); // UI 업데이트
+            if (updateUI) UpdateInventoryDisplay(); // UI 업데이트
             return;
         }
 
         // 새 아이템 슬롯 추가
         playerInventory.Add(new InventorySlot { itemData = itemToAdd, quantity = quantity });
-        UpdateInventoryDisplay(); // UI 업데이트
+        if (updateUI) UpdateInventoryDisplay(); // UI 업데이트
     }
 
+    public void AddItem(ItemData itemToAdd, int quantity)
+    {
+        AddItemToPlayerInventory(itemToAdd, quantity);
+    }
+    
     // 플레이어 인벤토리에서 아이템을 제거하는 함수 (옵션)
     public void RemoveItemFromPlayerInventory(ItemData itemToRemove, int quantity)
     {
@@ -96,7 +102,7 @@ public class ScrollView : MonoBehaviour
         }
     }
     
-    private void UpdateInventoryDisplay()
+    public void UpdateInventoryDisplay()
     {
         GenerateAndDisplaySlots();
     }

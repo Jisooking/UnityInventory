@@ -9,21 +9,34 @@ public class ItemSlots : MonoBehaviour
     public Image itemIcon;
     public TextMeshProUGUI itemQuantityText;
     private ItemData currentItemData;
+    private int currentQuantity;
+    public GameObject equippedIndicator;
 
+    private void Awake()
+    {
+        if (equippedIndicator)
+        {
+            equippedIndicator.SetActive(false);
+        }
+    }
+    
     public void SetItem(ItemData data, int quantity = 1)
     {
         currentItemData = data;
+        currentQuantity = quantity;
 
         if (data)
         {
             itemIcon.sprite = data.itemIcon;
-            itemIcon.enabled = true;
+            itemIcon.enabled = (data.itemIcon);
 
             if (itemQuantityText)
             {
                 itemQuantityText.text = quantity.ToString();
                 itemQuantityText.enabled = quantity > 1;
             }
+            
+            UpdateEquippedIndicator();
         }
         else
         {
@@ -33,25 +46,104 @@ public class ItemSlots : MonoBehaviour
             if (!itemQuantityText) return;
             itemQuantityText.text = ""; 
             itemQuantityText.enabled = false;
+            if (equippedIndicator)
+            {
+                equippedIndicator.SetActive(false);
+            }
         }
-    }
-    public void SetData(ItemData data)
-    {
-        if (!data) return;
-        if (!itemIcon) return;
-        itemIcon.sprite = data.itemIcon; // StatusData의 Sprite를 Image 컴포넌트의 sprite 속성에 할당
-        itemIcon.enabled = (data.itemIcon); // 아이콘이 없으면 Image 컴포넌트 비활성화
     }
     
     public void OnSlotClicked()
     {
-        if (currentItemData)
+        if(!currentItemData)
         {
-            Debug.Log($"슬롯 클릭: {currentItemData.itemName}");
+            Debug.Log("빈 슬롯 클릭");
+            return;
+        }
+        if (!PlayerManager.Instance)
+        {
+            Debug.LogError("PlayerManager.Instance를 찾을 수 없습니다.");
+            return;
+        }
+        switch (currentItemData.itemType)
+        {
+            case ItemType.Weapon:
+            case ItemType.Armor: 
+            case ItemType.Helmet:
+            case ItemType.Accessory:
+                HandleEquipmentClick();
+                break;
+            default:
+                Debug.Log($"알 수 없는 아이템 타입: {currentItemData.itemType}");
+                break;
+        }
+    }
+    private void HandleEquipmentClick()
+    {
+        Character character = PlayerManager.Instance.playerCharacter;
+        bool isCurrentlyEquipped = false;
+
+        switch (currentItemData.itemType)
+        {
+            case ItemType.Weapon:
+                isCurrentlyEquipped = (character.equippedWeapon == currentItemData);
+                break;
+            case ItemType.Armor:
+                isCurrentlyEquipped = (character.equippedArmor == currentItemData);
+                break;
+            case ItemType.Helmet:
+                isCurrentlyEquipped = (character.equippedHelmet == currentItemData);
+                break;
+            case ItemType.Accessory:
+                isCurrentlyEquipped = (character.equippedAccessory == currentItemData);
+                break;
+        }
+
+        if (isCurrentlyEquipped)
+        {
+            PlayerManager.Instance.RequestUnequipItem(currentItemData.itemType);
         }
         else
         {
-            Debug.Log("빈 슬롯 클릭");
+            PlayerManager.Instance.RequestEquipItem(currentItemData);
         }
+    }
+
+    public void UpdateEquippedIndicator()
+    {
+        if (!equippedIndicator || !PlayerManager.Instance || !currentItemData)
+        {
+            if (equippedIndicator) equippedIndicator.SetActive(false);
+            return;
+        }
+
+        Character character = PlayerManager.Instance.playerCharacter;
+        if (character == null)
+        {
+            if (equippedIndicator) equippedIndicator.SetActive(false);
+            return;
+        }
+
+        bool isEquipped = false;
+        switch (currentItemData.itemType)
+        {
+            case ItemType.Weapon:
+                isEquipped = (character.equippedWeapon == currentItemData);
+                break;
+            case ItemType.Armor:
+                isEquipped = (character.equippedArmor == currentItemData);
+                break;
+            case ItemType.Helmet:
+                isEquipped = (character.equippedHelmet == currentItemData);
+                break;
+            case ItemType.Accessory:
+                isEquipped = (character.equippedAccessory == currentItemData);
+                break;
+            default:
+                isEquipped = false;
+                break;
+        }
+
+        equippedIndicator.SetActive(isEquipped);
     }
 }
