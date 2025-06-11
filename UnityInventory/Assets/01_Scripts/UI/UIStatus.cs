@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic; 
@@ -10,22 +11,29 @@ public class UIStatus : MonoBehaviour
    
    private List<GameObject> statusSlots = new List<GameObject>(); // 생성된 슬롯을 관리하기 위한 리스트
    
+   private void OnEnable()
+   {
+       StartCoroutine(WaitForPlayerCharacter());
+   }
+   
+   private IEnumerator WaitForPlayerCharacter()
+   {
+       yield return new WaitUntil(() => PlayerManager.Instance && PlayerManager.Instance.playerCharacter != null);
+
+       InitializeUI();
+   }
+   
     // UI를 초기화하고 플레이어 스탯을 표시하는 메서드
     public void InitializeUI()
     {
         ClearStatusSlots();
-        
-        if (!PlayerManager.Instance || PlayerManager.Instance.playerCharacter == null)
-        {
-            return;
-        }
-        
+                
         var character = PlayerManager.Instance.playerCharacter;
-        
-        AddStatusSlot(character.Attack);
-        AddStatusSlot(character.Defense);
-        AddStatusSlot(character.Hp);
-        AddStatusSlot(character.Critical);
+
+        foreach (var status in character.GetAllStatuses())
+        {
+            AddStatusSlot(status);
+        }
     }
 
     private void AddStatusSlot(StatusData statusData)
@@ -46,7 +54,7 @@ public class UIStatus : MonoBehaviour
         if (slotUI)
         {
             slotUI.SetData(statusData);
-            statusSlots.Add(newSlotGO); // 생성된 슬롯을 리스트에 추가하여 관리
+            statusSlots.Add(newSlotGO); // 생성된 슬롯을 리스트에 추가하여 관리 
         }
         else
         {

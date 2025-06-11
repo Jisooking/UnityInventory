@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Character
@@ -64,6 +65,11 @@ public class Character
         _baseCritical = baseCrit;
         
         CalculateTotalStats(); 
+    }
+    
+    public List<StatusData> GetAllStatuses()
+    {
+        return new List<StatusData> { Attack, Defense, Hp, Critical };
     }
     
     public void CalculateTotalStats()
